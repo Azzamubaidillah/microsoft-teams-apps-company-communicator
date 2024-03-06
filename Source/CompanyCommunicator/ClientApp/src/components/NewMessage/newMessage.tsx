@@ -424,10 +424,10 @@ export const NewMessage = () => {
           }
         };
 
-        if (!checkValidSizeOfImage(resizedImageAsBase64)) {
-          setImageUploadErrorMessage(t('ErrorImageSizeMessage') ?? '');
-          return;
-        }
+        // if (!checkValidSizeOfImage(resizedImageAsBase64)) {
+        //   setImageUploadErrorMessage(t('ErrorImageSizeMessage') ?? '');
+        //   return;
+        // }
 
         setMessageState({ ...messageState, imageLink: resizedImageAsBase64 });
       };
