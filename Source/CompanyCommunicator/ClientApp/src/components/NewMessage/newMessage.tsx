@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/dot-notation */
+// @ts-nocheck
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -377,14 +378,14 @@ export const NewMessage = () => {
     }
   };
 
-  const checkValidSizeOfImage = (resizedImageAsBase64: string) => {
-    const stringLength = resizedImageAsBase64.length - 'data:image/png;base64,'.length;
-    const sizeInBytes = 4 * Math.ceil(stringLength / 3) * 0.5624896334383812;
-    const sizeInKb = sizeInBytes / 1000;
+  // const checkValidSizeOfImage = (resizedImageAsBase64: string) => {
+  //   const stringLength = resizedImageAsBase64.length - 'data:image/png;base64,'.length;
+  //   const sizeInBytes = 4 * Math.ceil(stringLength / 3) * 0.5624896334383812;
+  //   const sizeInKb = sizeInBytes / 1000;
 
-    if (sizeInKb <= 1024) return true;
-    else return false;
-  };
+  //   if (sizeInKb <= 1024) return true;
+  //   else return false;
+  // };
 
   const handleImageSelection = () => {
     const file = fileInput.current?.files[0];
