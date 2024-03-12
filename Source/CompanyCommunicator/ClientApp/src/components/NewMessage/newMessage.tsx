@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/dot-notation */
-// @ts-nocheck
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
