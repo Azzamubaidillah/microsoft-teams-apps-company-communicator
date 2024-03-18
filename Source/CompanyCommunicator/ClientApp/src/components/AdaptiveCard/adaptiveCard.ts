@@ -67,8 +67,13 @@ export const getCardSummary = (card: any) => {
 };
 
 export const setCardSummary = (card: any, summary?: string) => {
-  card.body[2].text = summary;
+  if (summary) {
+    card.body[2].text = `<div>${summary}</div>`;
+  } else {
+    card.body[2].text = '';
+  }
 };
+
 
 export const getCardAuthor = (card: any) => {
   return card.body[3].text;
