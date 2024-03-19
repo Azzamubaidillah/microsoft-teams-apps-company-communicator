@@ -67,7 +67,7 @@ export const getCardSummary = (card: any) => {
 };
 
 export const setCardSummary = (card: any, summary?: string) => {
-    card.body[2].text = '';
+  card.body[2].text = '';
 };
 
 export const getCardAuthor = (card: any) => {
