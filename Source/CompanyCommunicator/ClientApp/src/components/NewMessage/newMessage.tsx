@@ -55,9 +55,6 @@ import {
   setCardTitle,
 } from '../AdaptiveCard/adaptiveCard';
 
-const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
-const validVideoTypes = ['video/mp4', 'video/mkv', 'video/avi', 'video/mov'];
-
 interface IMessageState {
   id?: string;
   title: string;
