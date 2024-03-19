@@ -479,7 +479,7 @@ export const NewMessage = () => {
     setImageFileName(file['name']);
     setImageUploadErrorMessage('');
     const videoUrl = URL.createObjectURL(file);
-    setMessageState({ ...messageState, videoLink: videoUrl });
+    setMessageState({ ...messageState, imageLink: videoUrl });
   };
 
   const isSaveBtnDisabled = () => {
