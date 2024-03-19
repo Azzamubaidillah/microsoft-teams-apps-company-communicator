@@ -56,6 +56,7 @@ import {
 } from '../AdaptiveCard/adaptiveCard';
 
 const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
+const validVideoTypes = ['video/mp4', 'video/mkv', 'video/avi', 'video/mov'];
 
 interface IMessageState {
   id?: string;
@@ -386,52 +387,123 @@ export const NewMessage = () => {
   //   else return false;
   // };
 
-  const handleImageSelection = () => {
-    const file = fileInput.current?.files[0];
+  // const handleImageSelection = () => {
+  //   const file = fileInput.current?.files[0];
 
+  //   if (file) {
+  //     const fileType = file['type'];
+  //     const { type: mimeType } = file;
+
+  //     if (!validImageTypes.includes(fileType)) {
+  //       setImageUploadErrorMessage(t('ErrorImageTypesMessage') ?? '');
+  //       return;
+  //     }
+
+  //     setImageFileName(file['name']);
+  //     setImageUploadErrorMessage('');
+
+  //     const fileReader = new FileReader();
+  //     fileReader.readAsDataURL(file);
+  //     fileReader.onload = () => {
+  //       const image = new Image();
+  //       image.src = fileReader.result as string;
+  //       let resizedImageAsBase64 = fileReader.result as string;
+
+  //       image.onload = function (e: any) {
+  //         const MAX_WIDTH = 1024;
+
+  //         if (image.width > MAX_WIDTH) {
+  //           const canvas = document.createElement('canvas');
+  //           canvas.width = MAX_WIDTH;
+  //           canvas.height = ~~(image.height * (MAX_WIDTH / image.width));
+  //           const context = canvas.getContext('2d', { alpha: false });
+  //           if (!context) {
+  //             return;
+  //           }
+  //           context.drawImage(image, 0, 0, canvas.width, canvas.height);
+  //           resizedImageAsBase64 = canvas.toDataURL(mimeType);
+  //         }
+  //       };
+
+  //       // if (!checkValidSizeOfImage(resizedImageAsBase64)) {
+  //       //   setImageUploadErrorMessage(t('ErrorImageSizeMessage') ?? '');
+  //       //   return;
+  //       // }
+
+  //       setMessageState({ ...messageState, imageLink: resizedImageAsBase64 });
+  //     };
+  //   }
+  // };
+
+  const handleFileSelection = () => {
+    const file = fileInput.current?.files[0];
+  
     if (file) {
       const fileType = file['type'];
       const { type: mimeType } = file;
-
-      if (!validImageTypes.includes(fileType)) {
-        setImageUploadErrorMessage(t('ErrorImageTypesMessage') ?? '');
+  
+      const validImageTypes = ['image/jpeg', 'image/png']; // Add more if needed
+      const validVideoTypes = ['video/mp4', 'video/webm', 'video/ogg']; // Add more if needed
+  
+      if (validImageTypes.includes(fileType)) {
+        handleImage(file, mimeType);
+      } else if (validVideoTypes.includes(fileType)) {
+        handleVideo(file);
+      } else {
+        setImageUploadErrorMessage(t('ErrorFileTypesMessage') ?? '');
         return;
       }
-
-      setImageFileName(file['name']);
-      setImageUploadErrorMessage('');
-
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        const image = new Image();
-        image.src = fileReader.result as string;
-        let resizedImageAsBase64 = fileReader.result as string;
-
-        image.onload = function (e: any) {
-          const MAX_WIDTH = 1024;
-
-          if (image.width > MAX_WIDTH) {
-            const canvas = document.createElement('canvas');
-            canvas.width = MAX_WIDTH;
-            canvas.height = ~~(image.height * (MAX_WIDTH / image.width));
-            const context = canvas.getContext('2d', { alpha: false });
-            if (!context) {
-              return;
-            }
-            context.drawImage(image, 0, 0, canvas.width, canvas.height);
-            resizedImageAsBase64 = canvas.toDataURL(mimeType);
-          }
-        };
-
-        // if (!checkValidSizeOfImage(resizedImageAsBase64)) {
-        //   setImageUploadErrorMessage(t('ErrorImageSizeMessage') ?? '');
-        //   return;
-        // }
-
-        setMessageState({ ...messageState, imageLink: resizedImageAsBase64 });
-      };
     }
+  };
+  
+  const handleImage = (file: File, mimeType: string) => {
+    setImageFileName(file['name']);
+    setImageUploadErrorMessage('');
+  
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      const image = new Image();
+      image.src = fileReader.result as string;
+      let resizedImageAsBase64 = fileReader.result as string;
+  
+      image.onload = function (e: any) {
+        const MAX_WIDTH = 1024;
+  
+        if (image.width > MAX_WIDTH) {
+          const canvas = document.createElement('canvas');
+          canvas.width = MAX_WIDTH;
+          canvas.height = ~~(image.height * (MAX_WIDTH / image.width));
+          const context = canvas.getContext('2d', { alpha: false });
+          if (!context) {
+            return;
+          }
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          resizedImageAsBase64 = canvas.toDataURL(mimeType);
+        }
+      };
+  
+      // if (!checkValidSizeOfImage(resizedImageAsBase64)) {
+      //   setImageUploadErrorMessage(t('ErrorImageSizeMessage') ?? '');
+      //   return;
+      // }
+  
+      setMessageState({ ...messageState, imageLink: resizedImageAsBase64 });
+    };
+  };
+  
+  const handleVideo = (file: File) => {
+    setImageFileName(file['name']);
+    setImageUploadErrorMessage('');
+  
+    const videoUrl = URL.createObjectURL(file);
+  
+    // if (!checkValidSizeOfVideo(videoUrl)) {
+    //   setVideoUploadErrorMessage(t('ErrorVideoSizeMessage') ?? '');
+    //   return;
+    // }
+  
+    setMessageState({ ...messageState, videoLink: videoUrl });
   };
 
   const isSaveBtnDisabled = () => {
@@ -803,11 +875,11 @@ export const NewMessage = () => {
                   }
                   <input
                     type='file'
-                    accept='.jpg, .jpeg, .png, .gif'
+                    accept='.jpg, .jpeg, .png, .gif, .mkv, .mp4, .avi, .mov'
                     aria-label='input file upload (hidden)'
                     style={{ display: 'none' }}
                     multiple={false}
-                    onChange={handleImageSelection}
+                    onChange={handleFileSelection}
                     ref={fileInput}
                   />
                 </div>
