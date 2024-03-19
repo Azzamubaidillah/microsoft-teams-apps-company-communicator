@@ -440,14 +440,10 @@ export const NewMessage = () => {
     if (file) {
       const fileType = file['type'];
       const { type: mimeType } = file;
-  
     if (validImageTypes.includes(fileType)) {
-        handleImage(file, mimeType);
+      handleImage(file, mimeType);
       } else if (validVideoTypes.includes(fileType)) {
         handleVideo(file);
-      } else {
-        setImageUploadErrorMessage(t('ErrorImageTypesMessage') ?? '');
-        return;
       }
     }
   };
@@ -461,7 +457,6 @@ export const NewMessage = () => {
       const image = new Image();
       image.src = fileReader.result as string;
       let resizedImageAsBase64 = fileReader.result as string;
-  
       image.onload = function (e: any) {
         const MAX_WIDTH = 1024;
         if (image.width > MAX_WIDTH) {
