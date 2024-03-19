@@ -74,7 +74,6 @@ export const setCardSummary = (card: any, summary?: string) => {
   }
 };
 
-
 export const getCardAuthor = (card: any) => {
   return card.body[3].text;
 };
