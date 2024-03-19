@@ -437,17 +437,16 @@ export const NewMessage = () => {
 
   const handleFileSelection = () => {
     const file = fileInput.current?.files[0];
-  
     if (file) {
       const fileType = file['type'];
       const { type: mimeType } = file;
   
-      if (validImageTypes.includes(fileType)) {
+    if (validImageTypes.includes(fileType)) {
         handleImage(file, mimeType);
       } else if (validVideoTypes.includes(fileType)) {
         handleVideo(file);
       } else {
-        setImageUploadErrorMessage(t('ErrorFileTypesMessage') ?? '');
+        setImageUploadErrorMessage(t('ErrorImageTypesMessage') ?? '');
         return;
       }
     }
@@ -456,7 +455,6 @@ export const NewMessage = () => {
   const handleImage = (file: File, mimeType: string) => {
     setImageFileName(file['name']);
     setImageUploadErrorMessage('');
-  
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.onload = () => {
@@ -466,7 +464,6 @@ export const NewMessage = () => {
   
       image.onload = function (e: any) {
         const MAX_WIDTH = 1024;
-  
         if (image.width > MAX_WIDTH) {
           const canvas = document.createElement('canvas');
           canvas.width = MAX_WIDTH;
@@ -479,12 +476,6 @@ export const NewMessage = () => {
           resizedImageAsBase64 = canvas.toDataURL(mimeType);
         }
       };
-  
-      // if (!checkValidSizeOfImage(resizedImageAsBase64)) {
-      //   setImageUploadErrorMessage(t('ErrorImageSizeMessage') ?? '');
-      //   return;
-      // }
-  
       setMessageState({ ...messageState, imageLink: resizedImageAsBase64 });
     };
   };
@@ -492,14 +483,7 @@ export const NewMessage = () => {
   const handleVideo = (file: File) => {
     setImageFileName(file['name']);
     setImageUploadErrorMessage('');
-  
     const videoUrl = URL.createObjectURL(file);
-  
-    // if (!checkValidSizeOfVideo(videoUrl)) {
-    //   setVideoUploadErrorMessage(t('ErrorVideoSizeMessage') ?? '');
-    //   return;
-    // }
-  
     setMessageState({ ...messageState, videoLink: videoUrl });
   };
 
