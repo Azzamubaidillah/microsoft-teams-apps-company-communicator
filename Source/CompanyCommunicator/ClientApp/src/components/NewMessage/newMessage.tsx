@@ -440,14 +440,14 @@ export const NewMessage = () => {
     if (file) {
       const fileType = file['type'];
       const { type: mimeType } = file;
-    if (validImageTypes.includes(fileType)) {
-      handleImage(file, mimeType);
+      if (validImageTypes.includes(fileType)) {
+        handleImage(file, mimeType);
       } else if (validVideoTypes.includes(fileType)) {
         handleVideo(file);
       }
     }
   };
-  
+
   const handleImage = (file: File, mimeType: string) => {
     setImageFileName(file['name']);
     setImageUploadErrorMessage('');
@@ -474,7 +474,7 @@ export const NewMessage = () => {
       setMessageState({ ...messageState, imageLink: resizedImageAsBase64 });
     };
   };
-  
+
   const handleVideo = (file: File) => {
     setImageFileName(file['name']);
     setImageUploadErrorMessage('');
