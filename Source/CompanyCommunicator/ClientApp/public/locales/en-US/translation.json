@@ -26,7 +26,7 @@
   "InstallingApp": "Installing app...",
   "SendingMessages": "Sending... {{SentCount}} of {{TotalCount}}",
   "Canceling": "Canceling...",
-  "ImageURL": "Image URL",
+  "ImageURL": "Upload File",
   "Summary": "Summary",
   "Author": "Author",
   "Author1": "- Author",
