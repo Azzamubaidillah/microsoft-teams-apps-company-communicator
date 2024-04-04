@@ -71,6 +71,7 @@ interface IMessageState {
   allUsers: boolean;
   isScheduled?: boolean;
   scheduledDate?: string;
+  videoLink?: string;
 }
 
 interface ITeamTemplate {
@@ -185,7 +186,7 @@ export const NewMessage = () => {
       setDefaultCard(card);
     } else {
       setCardTitle(card, messageState.title);
-      setCardImageLink(card, messageState.imageLink);
+      setCardImageLink(card, messageState.imageLink, messageState.videoLink);
       setCardSummary(card, messageState.summary);
       setCardAuthor(card, messageState.author);
       setCardBtn(card, messageState.buttonTitle, messageState.buttonLink);
@@ -558,6 +559,11 @@ export const NewMessage = () => {
     setMessageState({ ...messageState, title: event.target.value });
   };
 
+  const onVideoLinkChanged = (event: any) => {
+    setMessageState({ ...messageState, videoLink: event.target.value });
+  };
+  
+
   const onImageLinkChanged = (event: any) => {
     const urlOrDataUrl = event.target.value;
     let isGoodLink = true;
@@ -845,6 +851,17 @@ export const NewMessage = () => {
                   value={messageState.buttonTitle ?? ''}
                 />
               </Field>
+              <Field size='large' className={fieldStyles.styles} label={t('VideoURL')}>
+                <Input
+                  size='large'
+                  placeholder={t('PlaceHolderVideoURL')}
+                  onChange={onVideoLinkChanged}
+                  autoComplete='off'
+                  appearance='filled-darker'
+                  value={messageState.videoLink ?? ''}
+                />
+              </Field>
+
               <Field
                 size='large'
                 className={fieldStyles.styles}

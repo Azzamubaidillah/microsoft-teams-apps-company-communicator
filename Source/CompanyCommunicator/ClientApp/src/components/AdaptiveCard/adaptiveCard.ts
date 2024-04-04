@@ -21,27 +21,18 @@ export const getInitAdaptiveCard = (titleText: string) => {
         wrap: true,
       },
       {
-        type: 'Image',
-        spacing: 'Default',
-        url: '',
-        altText: '',
-        size: 'Auto',
-      },
-      {
-        type: 'TextBlock',
-        text: '',
-        wrap: true,
-      },
-      {
-        type: 'TextBlock',
-        size: 'Small',
-        weight: 'Lighter',
-        text: '',
-        wrap: true,
+        type: 'Media',
+        poster: '',
+        sources: [
+          {
+            mimeType: 'video/mp4',
+            url: '',
+          },
+        ],
       },
     ],
     $schema: 'https://adaptivecards.io/schemas/adaptive-card.json',
-    version: '1.0',
+    version: '1.6',
   };
 };
 
@@ -55,12 +46,15 @@ export const setCardTitle = (card: any, title: string) => {
 };
 
 export const getCardImageLink = (card: any) => {
-  return card.body[1].url;
+  const mediaElement = card.body.find((element: any) => element.type === 'Media');
+  return mediaElement?.poster || '';
 };
 
-export const setCardImageLink = (card: any, imageLink?: string) => {
-  card.body[1].url = imageLink;
+export const setCardImageLink = (card: any, imageLink?: string, videoLink?: string) => {
+    card.body[1].poster = imageLink || '';
+    card.body[1].sources[0].url = videoLink || '';
 };
+
 
 export const getCardSummary = (card: any) => {
   return card.body[2].text;
@@ -73,7 +67,6 @@ export const setCardSummary = (card: any, summary?: string) => {
     card.body[2].text = '';
   }
 };
-
 
 export const getCardAuthor = (card: any) => {
   return card.body[3].text;
