@@ -21,27 +21,18 @@ export const getInitAdaptiveCard = (titleText: string) => {
         wrap: true,
       },
       {
-        type: 'Image',
-        spacing: 'Default',
-        url: '',
-        altText: '',
-        size: 'Auto',
-      },
-      {
-        type: 'TextBlock',
-        text: '',
-        wrap: true,
-      },
-      {
-        type: 'TextBlock',
-        size: 'Small',
-        weight: 'Lighter',
-        text: '',
-        wrap: true,
+        type: 'Media',
+        poster: '',
+        sources: [
+          {
+            mimeType: 'video/mp4',
+            url: '',
+          },
+        ],
       },
     ],
     $schema: 'https://adaptivecards.io/schemas/adaptive-card.json',
-    version: '1.0',
+    version: '1.6',
   };
 };
 
